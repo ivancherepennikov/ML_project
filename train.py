@@ -2,13 +2,21 @@ from torch.utils.data import DataLoader, random_split
 from torchvision.datasets import ImageFolder
 from torchvision import transforms
 from torch.utils.data import DataLoader
+import torch
 
 from model import model, errow_function, optimizer, DIVICE
 
 BATCH_SIZE = 32
 EPOCHS = 10
 
-dataset = ImageFolder('dataset/', transform=transforms.ToTensor())
+dataset = ImageFolder(
+    'dataset/',
+    transform=transforms.Compose([
+        transforms.Grayscale(1),
+        transforms.ToTensor(),
+    ])
+)
+
 train_size = int (0.8 * len(dataset))
 test_size = len(dataset) - train_size
 
@@ -68,3 +76,5 @@ def test():
 for epoch in range(1, EPOCHS+1):
     train(epoch)
     test()
+
+torch.save(model.state_dict(), "model.pth")

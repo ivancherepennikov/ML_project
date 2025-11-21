@@ -5,17 +5,25 @@ import torch.nn as nn
 class Model_to_numbers(nn.Module):
     def __init__(self):
         super().__init__()
-        self.net = nn.Sequential(
-            nn.Linear(3 * 28 * 28, 64),
-            nn.ReLU(),           
-            nn.Linear(64, 64),
+        self.conv = nn.Sequential(
+            nn.Conv2d(1, 16, 3, padding=1),
             nn.ReLU(),
-            nn.Linear(64, 14)
+            nn.MaxPool2d(2),  
+            nn.Conv2d(16, 32, 3, padding=1),
+            nn.ReLU(),
+            nn.MaxPool2d(2)     
+        )
+        self.fc = nn.Sequential(
+            nn.Linear(32 * 7 * 7, 128),
+            nn.ReLU(),
+            nn.Linear(128, 14)
         )
 
     def forward(self, x):
+        x = self.conv(x)
         x = x.view(x.size(0), -1)
-        return self.net(x)
+        return self.fc(x)
+
     
 
 DIVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
