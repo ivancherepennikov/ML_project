@@ -7,7 +7,7 @@ import torch
 from model import model, errow_function, optimizer, DIVICE
 
 BATCH_SIZE = 32
-EPOCHS = 10
+EPOCHS = 3
 
 dataset = ImageFolder(
     'dataset/',

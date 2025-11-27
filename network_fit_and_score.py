@@ -22,23 +22,25 @@ def final():
     )
 
     for filename in files:
-
         path = os.path.join(input_dir, filename)
 
         img = cv2.imread(path)
+
         img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
         img = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
-        img = img.astype(np.float32) / 255.0
-        img = 1.0 - img
-        img = img.reshape(1, 28, 28)
 
-        tensor = torch.tensor(img).unsqueeze(0).contiguous()
+        img_float = img.astype(np.float32) / 255.0
+        img_inv = 1.0 - img_float
+
+        img_inv = img_inv.reshape(1, 28, 28)
+        tensor = torch.tensor(img_inv).unsqueeze(0).contiguous()
 
         with torch.no_grad():
             logits = model(tensor)
             prediction = logits.argmax(1).item()
 
         math_array.append(prediction)
+
 
     # scoring
     score = ''
@@ -54,4 +56,5 @@ def final():
         else:
             score += str(symbol)
 
+    print(score)
     return(eval(score))

@@ -34,9 +34,7 @@ def parse_photo(input_photo):
         area = cv2.contourArea(cnt)
 
         # мусор пора выкидывать
-        if area < 80:
-            continue
-        if h < 15:
+        if area < 100:
             continue
 
         # Вырезаем символ
