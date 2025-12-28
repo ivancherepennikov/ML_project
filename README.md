@@ -1,6 +1,5 @@
 # Math Expression Recognition Project
 
-This repository is an educational project created by students Cherepennikov and Sorvachev.  
 The project builds a system capable of solving simple mathematical expressions from photos using:
 
 - a custom PyTorch-based Convolutional Neural Network,
